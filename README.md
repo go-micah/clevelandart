@@ -1,2 +1,2 @@
 # clevelandart
-Talk to Cleveland
+talk to cleveland
