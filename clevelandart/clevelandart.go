@@ -1,3 +1,4 @@
+// Package clevelandart offers users an easy way to fetch data from the Cleveland Museum of Art Open API
 package clevelandart
 
 import (
@@ -8,8 +9,10 @@ import (
 	"net/http"
 )
 
+// endpoint is the current endpoint for Cleveland's Open API
 const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
+// Artwork is a structured data type for an individual artwork record
 type Artwork struct {
 	Data struct {
 		ID                       int    `json:"id"`
@@ -27,7 +30,7 @@ type Artwork struct {
 	} `json:"data"`
 }
 
-// GetArtworkByID get a single artwork by its ID
+// GetArtworkByID returns a single artwork by its ID
 func GetArtworkByID(id string) (*Artwork, error) {
 
 	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/%s", id))
@@ -47,6 +50,7 @@ func GetArtworkByID(id string) (*Artwork, error) {
 	}
 
 	result := Artwork{}
+
 	err = json.Unmarshal(b, &result)
 	if err != nil {
 		return nil, errors.New("could not unmarshal data")
