@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -44,7 +44,7 @@ func GetArtworkByID(id string) (*Artwork, error) {
 		return nil, fmt.Errorf("%s: %s", "could not fetch data", resp.Status)
 	}
 
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, errors.New("could not read data")
 	}
