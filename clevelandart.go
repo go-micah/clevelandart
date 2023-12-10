@@ -12,6 +12,12 @@ import (
 // endpoint is the current endpoint for Cleveland's Open API
 const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
+// ArtworkParams is a struct representing the paramesters available to query artworks
+type ArtworkParams struct {
+	Indent int    `json:"indent"`
+	Query  string `json:"q"`
+}
+
 // Artwork is a structured data type for an individual artwork record
 type Artwork struct {
 	Data Data `json:"data"`
@@ -42,9 +48,11 @@ type Data struct {
 }
 
 // GetArtworkByID returns a single artwork by its ID
-func GetArtworkByID(id string) (*Artwork, error) {
+func GetArtworkByID(id string, params ArtworkParams) (*Artwork, error) {
 
-	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/%s", id))
+	indent := params.Indent
+
+	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/%s?indent=%v", id, indent))
 
 	if err != nil {
 		return nil, err
