@@ -85,6 +85,7 @@ func GetArtworkByID(id int, params ArtworkParams) (*Artwork, error) {
 
 }
 
+// SearchArtworks returns a slice of Artwork objects
 func SearchArtworks(query string, params ArtworkParams) (*Artworks, error) {
 
 	queryString, err := serializeParams(params)
@@ -119,6 +120,7 @@ func SearchArtworks(query string, params ArtworkParams) (*Artworks, error) {
 
 }
 
+// serializedParams converts ArtworkParams to a query string parameter and returns as a string
 func serializeParams(params ArtworkParams) (string, error) {
 	v, err := query.Values(params)
 	if err != nil {
