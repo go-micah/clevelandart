@@ -34,12 +34,8 @@ type Artworks struct {
 	Info struct {
 		Total      int `json:"total"`
 		Parameters struct {
-			Indent   int    `json:"indent"`
-			Query    string `json:"q"`
-			Skip     int    `json:"skip"`
-			HasImage bool   `json:"has_image"`
-			Search   string `json:"search"`
-			Limit    int    `json:"limit"`
+			Indent int `json:"indent"`
+			Limit  int `json:"limit"`
 		} `json:"parameters"`
 	} `json:"info"`
 	Data []Data `json:"data"`

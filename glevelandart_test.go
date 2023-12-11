@@ -62,7 +62,7 @@ func TestGetRandomArtwork(t *testing.T) {
 	art, err := GetRandomArtwork(hasImage)
 
 	got := art.Data.ID
-	
+
 	if got <= 0 || err != nil {
 		t.Errorf("got %v, %v want > 0, nil", got, err)
 	}
