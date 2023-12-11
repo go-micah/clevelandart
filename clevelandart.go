@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/google/go-querystring/query"
 )
 
 // endpoint is the current endpoint for Cleveland's Open API
@@ -14,8 +16,9 @@ const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
 // ArtworkParams is a struct representing the paramesters available to query artworks
 type ArtworkParams struct {
-	Indent int    `json:"indent"`
-	Query  string `json:"q"`
+	Indent int    `url:"indent"`
+	Query  string `url:"q"`
+	Limit  int    `url:"limit"`
 }
 
 // Artwork is a structured data type for an individual artwork record
@@ -26,7 +29,10 @@ type Artwork struct {
 // Artworks is a structured data type for multiple artwork records
 type Artworks struct {
 	Info struct {
-		Total int `json:"total"`
+		Total      int `json:"total"`
+		Parameters struct {
+			Limit int `json:"limit"`
+		} `json:"parameters"`
 	} `json:"info"`
 	Data []Data `json:"data"`
 }
@@ -48,11 +54,11 @@ type Data struct {
 }
 
 // GetArtworkByID returns a single artwork by its ID
-func GetArtworkByID(id string, params ArtworkParams) (*Artwork, error) {
+func GetArtworkByID(id int, params ArtworkParams) (*Artwork, error) {
 
 	indent := params.Indent
 
-	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/%s?indent=%v", id, indent))
+	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/%v?indent=%v", id, indent))
 
 	if err != nil {
 		return nil, err
@@ -77,4 +83,46 @@ func GetArtworkByID(id string, params ArtworkParams) (*Artwork, error) {
 
 	return &result, nil
 
+}
+
+func SearchArtworks(query string, params ArtworkParams) (*Artworks, error) {
+
+	queryString, err := serializeParams(params)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.Get(fmt.Sprintf(endpoint+"artworks/?%v", queryString))
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("%s: %s", "could not fetch data", resp.Status)
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.New("could not read data")
+	}
+
+	results := Artworks{}
+
+	err = json.Unmarshal(b, &results)
+	if err != nil {
+		return nil, errors.New("could not unmarshal data")
+	}
+
+	return &results, nil
+
+}
+
+func serializeParams(params ArtworkParams) (string, error) {
+	v, err := query.Values(params)
+	if err != nil {
+		return "", err
+	}
+	return v.Encode(), nil
 }
