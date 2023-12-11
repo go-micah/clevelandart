@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 
 	"github.com/google/go-querystring/query"
@@ -16,9 +17,11 @@ const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
 // ArtworkParams is a struct representing the paramesters available to query artworks
 type ArtworkParams struct {
-	Indent int    `url:"indent"`
-	Query  string `url:"q"`
-	Limit  int    `url:"limit"`
+	Indent   int    `url:"indent"`
+	Query    string `url:"q"`
+	Limit    int    `url:"limit"`
+	Skip     int    `url:"skip"`
+	HasImage int    `url:"has_image"`
 }
 
 // Artwork is a structured data type for an individual artwork record
@@ -127,4 +130,37 @@ func serializeParams(params ArtworkParams) (string, error) {
 		return "", err
 	}
 	return v.Encode(), nil
+}
+
+func GetRandomArtwork(hasImage bool) (*Artwork, error) {
+
+	// Call SearchArtworks to get the total number of artworks in the collection
+
+	params := ArtworkParams{
+		Indent: 0,
+		Limit:  1,
+	}
+
+	if hasImage {
+		params.HasImage = 1
+	}
+
+	art, err := SearchArtworks("", params)
+	if err != nil {
+		return nil, err
+	}
+
+	// Call SearchArtworks using a randomly generated index as the Skip param
+	max := art.Info.Total
+
+	params.Skip = rand.Intn(max)
+	randomArt, err := SearchArtworks("", params)
+	if err != nil {
+		return nil, err
+	}
+
+	result := Artwork{}
+	result.Data = randomArt.Data[0]
+
+	return &result, nil
 }

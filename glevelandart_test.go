@@ -1,6 +1,7 @@
 package clevelandart
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -53,5 +54,19 @@ func TestSerializeParams(t *testing.T) {
 
 	if got != want || err != nil {
 		t.Errorf("got %q, %v want %q, nil", got, err, want)
+	}
+}
+
+func TestGetRandomArtwork(t *testing.T) {
+
+	hasImage := true
+	art, err := GetRandomArtwork(hasImage)
+
+	got := art.Data.ID
+
+	fmt.Print(art.Data)
+	
+	if got <= 0 || err != nil {
+		t.Errorf("got %v, %v want > 0, nil", got, err)
 	}
 }
