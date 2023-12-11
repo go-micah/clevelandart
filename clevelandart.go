@@ -34,8 +34,12 @@ type Artworks struct {
 	Info struct {
 		Total      int `json:"total"`
 		Parameters struct {
-			Indent int `json:"indent"`
-			Limit  int `json:"limit"`
+			Skip   int    `json:"skip"`
+			Limit  int    `json:"limit"`
+			Indent int    `json:"indent"`
+			Query  string `json:"q"`
+			Select string `json:"select"`
+			Search string `json:"search"`
 		} `json:"parameters"`
 	} `json:"info"`
 	Data []Data `json:"data"`
@@ -43,25 +47,28 @@ type Artworks struct {
 
 // Data is a structured data type representing an artwork
 type Data struct {
-	ID                       int    `json:"id"`
-	AccessionNumber          string `json:"accession_number,omitempty"`
-	ShareLicenseStatus       string `json:"share_license_status,omitempty"`
-	Tombstone                string `json:"tombstone,omitempty"`
-	CurrentLocation          string `json:"current_location,omitempty"`
-	Title                    string `json:"title,omitempty"`
-	TitleInOriginalLanguage  string `json:"title_in_original_language,omitempty"`
-	Series                   string `json:"series,omitempty"`
-	SeriesInOriginalLanguage string `json:"series_in_original_language,omitempty"`
-	CreationDate             string `json:"creation_date,omitempty"`
-	CreationDateEarliest     int    `json:"creation_date_earliest,omitempty"`
-	CreationDateLatest       int    `json:"creation_date_latest,omitempty"`
+	ID                       int      `json:"id"`
+	AccessionNumber          string   `json:"accession_number,omitempty"`
+	ShareLicenseStatus       string   `json:"share_license_status,omitempty"`
+	Tombstone                string   `json:"tombstone,omitempty"`
+	CurrentLocation          string   `json:"current_location,omitempty"`
+	Title                    string   `json:"title,omitempty"`
+	TitleInOriginalLanguage  string   `json:"title_in_original_language,omitempty"`
+	Series                   string   `json:"series,omitempty"`
+	SeriesInOriginalLanguage string   `json:"series_in_original_language,omitempty"`
+	CreationDate             string   `json:"creation_date,omitempty"`
+	CreationDateEarliest     int      `json:"creation_date_earliest,omitempty"`
+	CreationDateLatest       int      `json:"creation_date_latest,omitempty"`
+	ArtistsTags              []string `json:"artists_tags,omitempty"`
 	Creators                 []struct {
-		Description string `json:"description"`
-		Role        string `json:"role"`
-		Biography   string `json:"biography"`
-	} `json:"creators"`
-	Culture     []string `json:"culture"`
-	Description string   `json:"description"`
+		Description string `json:"description,omitempty"`
+		Role        string `json:"role,omitempty"`
+		Biography   string `json:"biography,omitempty"`
+	} `json:"creators,omitempty"`
+	Culture     []string `json:"culture,omitempty"`
+	Technique   string   `json:"technique,omitempty"`
+	Department  string   `json:"department,omitempty"`
+	Description string   `json:"description,omitempty"`
 }
 
 // GetArtworkByID returns a single artwork by its ID
