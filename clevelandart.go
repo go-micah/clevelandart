@@ -34,7 +34,12 @@ type Artworks struct {
 	Info struct {
 		Total      int `json:"total"`
 		Parameters struct {
-			Limit int `json:"limit"`
+			Indent   int    `json:"indent"`
+			Query    string `json:"q"`
+			Skip     int    `json:"skip"`
+			HasImage bool   `json:"has_image"`
+			Search   string `json:"search"`
+			Limit    int    `json:"limit"`
 		} `json:"parameters"`
 	} `json:"info"`
 	Data []Data `json:"data"`
@@ -54,6 +59,13 @@ type Data struct {
 	CreationDate             string `json:"creation_date,omitempty"`
 	CreationDateEarliest     int    `json:"creation_date_earliest,omitempty"`
 	CreationDateLatest       int    `json:"creation_date_latest,omitempty"`
+	Creators                 []struct {
+		Description string `json:"description"`
+		Role        string `json:"role"`
+		Biography   string `json:"biography"`
+	} `json:"creators"`
+	Culture     []string `json:"culture"`
+	Description string   `json:"description"`
 }
 
 // GetArtworkByID returns a single artwork by its ID
