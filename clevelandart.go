@@ -149,7 +149,7 @@ func GetRandomArtwork(hasImage bool) (*Artwork, error) {
 	// Call SearchArtworks to get the total number of artworks in the collection
 
 	params := ArtworkParams{
-		Indent: 0,
+		Indent: 1,
 		Limit:  1,
 	}
 
