@@ -1,5 +1,5 @@
 module github.com/go-micah/clevelandart
 
-go 1.19
+go 1.21.5
 
-require github.com/google/go-querystring v1.1.0 // indirect
+require github.com/google/go-querystring v1.1.0
