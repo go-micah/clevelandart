@@ -69,6 +69,7 @@ type Data struct {
 	Technique   string   `json:"technique,omitempty"`
 	Department  string   `json:"department,omitempty"`
 	Description string   `json:"description,omitempty"`
+	URL         string   `json:"url,omitempty"`
 }
 
 // GetArtworkByID returns a single artwork by its ID
