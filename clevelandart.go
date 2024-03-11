@@ -12,7 +12,7 @@ import (
 const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
 // GetArtworkResponse represents the response from an API call to retrieve a single object
-type GetArtworkResponse struct {
+type getArtworkResponse struct {
 	Artwork Artwork `json:"data"`
 }
 
@@ -63,7 +63,7 @@ func GetArtwork(id string) (*Artwork, error) {
 		return nil, fmt.Errorf("%s: %s", "could not read data", err)
 	}
 
-	var a GetArtworkResponse
+	var a getArtworkResponse
 
 	err = json.Unmarshal(b, &a)
 	if err != nil {
