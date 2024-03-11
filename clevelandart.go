@@ -11,7 +11,7 @@ import (
 // endpoint is the current endpoint for Cleveland's Open API
 const endpoint = "https://openaccess-api.clevelandart.org/api/"
 
-// GetArtworkResponse represents the response from an API call to retrieve a single object
+// getArtworkResponse represents the response from an API call to retrieve a single object
 type getArtworkResponse struct {
 	Artwork Artwork `json:"data"`
 }
