@@ -14,4 +14,5 @@ func main() {
 	}
 
 	fmt.Println(artwork.Description)
+	fmt.Println(artwork.Images.Web.Url)
 }

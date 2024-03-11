@@ -36,12 +36,38 @@ type Artwork struct {
 		Role        string `json:"role,omitempty"`
 		Biography   string `json:"biography,omitempty"`
 	} `json:"creators,omitempty"`
-	Culture     []string `json:"culture,omitempty"`
-	Technique   string   `json:"technique,omitempty"`
-	Department  string   `json:"department,omitempty"`
-	Description string   `json:"description,omitempty"`
-	URL         string   `json:"url,omitempty"`
-	JSON        string
+	Culture      []string `json:"culture,omitempty"`
+	Technique    string   `json:"technique,omitempty"`
+	Department   string   `json:"department,omitempty"`
+	Collection   string   `json:"collection,omitempty"`
+	Type         string   `json:"type,omitempty"`
+	Measurements string   `json:"measurements,omitempty"`
+	Description  string   `json:"description,omitempty"`
+	Url          string   `json:"url,omitempty"`
+	Images       struct {
+		Web struct {
+			Url      string `json:"url,omitempty"`
+			Filename string `json:"filename,omitempty"`
+			Filesize string `json:"filesize,omitempty"`
+			Width    string `json:"width,omitempty"`
+			Height   string `json:"height,omitempty"`
+		} `json:"web,omitempty"`
+		Print struct {
+			Url      string `json:"url,omitempty"`
+			Filename string `json:"filename,omitempty"`
+			Filesize string `json:"filesize,omitempty"`
+			Width    string `json:"width,omitempty"`
+			Height   string `json:"height,omitempty"`
+		} `json:"print,omitempty"`
+		Full struct {
+			Url      string `json:"url,omitempty"`
+			Filename string `json:"filename,omitempty"`
+			Filesize string `json:"filesize,omitempty"`
+			Width    string `json:"width,omitempty"`
+			Height   string `json:"height,omitempty"`
+		} `json:"full,omitempty"`
+	} `json:"images,omitempty"`
+	JSON string
 }
 
 // GetArtwork retrieves an object from the Cleveland Museum of Art's Open Access API
