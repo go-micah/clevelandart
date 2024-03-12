@@ -29,3 +29,46 @@ func TestGetArtworkByAccessionNumber(t *testing.T) {
 		t.Errorf("got %q, %v want %q, nil", got, err, want)
 	}
 }
+
+func TestSerializeParams(t *testing.T) {
+
+	params := ArtworkInputParams{
+		Indent: 0,
+		Limit:  1,
+	}
+
+	got, err := serializeParams(params)
+	want := "has_image=0&indent=0&limit=1&q=&skip=0"
+
+	if got != want || err != nil {
+		t.Errorf("got %q, %v want %q, nil", got, err, want)
+	}
+}
+func TestSearchArtworks(t *testing.T) {
+
+	params := ArtworkInputParams{
+		Indent: 0,
+		Limit:  1,
+	}
+
+	art, err := SearchArtworks(params)
+
+	got := art.Info.Parameters.Limit
+	want := 1
+
+	if got != want || err != nil {
+		t.Errorf("got %q, %v want %q, nil", got, err, want)
+	}
+}
+
+func TestGetRandomArtwork(t *testing.T) {
+
+	hasImage := true
+	art, err := GetRandomArtwork(hasImage)
+
+	got := art.Id
+
+	if got <= 0 || err != nil {
+		t.Errorf("got %v, %v want > 0, nil", got, err)
+	}
+}
